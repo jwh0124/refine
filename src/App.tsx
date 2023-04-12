@@ -33,7 +33,7 @@ import { ColorModeContextProvider } from "./contexts/color-mode";
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
+      {/* <GitHubBanner /> */}
       <RefineKbarProvider>
         <ColorModeContextProvider>
           <CssBaseline />
@@ -105,7 +105,6 @@ function App() {
                   <Route path="*" element={<ErrorComponent />} />
                 </Route>
               </Routes>
-
               <RefineKbar />
               <UnsavedChangesNotifier />
             </Refine>
