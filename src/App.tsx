@@ -1,6 +1,7 @@
-import { GitHubBanner, Refine } from "@refinedev/core";
-import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import { CssBaseline, GlobalStyles } from "@mui/material";
+import { Refine } from "@refinedev/core";
 
+import { MuiInferencer } from "@refinedev/inferencer/mui";
 import {
   ErrorComponent,
   notificationProvider,
@@ -8,109 +9,136 @@ import {
   ThemedLayout,
 } from "@refinedev/mui";
 
-import { CssBaseline, GlobalStyles } from "@mui/material";
 import routerBindings, {
   NavigateToResource,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
 import dataProvider from "@refinedev/simple-rest";
-import {
-  BlogPostCreate,
-  BlogPostEdit,
-  BlogPostList,
-  BlogPostShow,
-} from "pages/blog-posts";
-import {
-  CategoryCreate,
-  CategoryEdit,
-  CategoryList,
-  CategoryShow,
-} from "pages/categories";
+import { Header } from "components";
+import { Title } from "components/title";
+import { ColorModeContextProvider } from "contexts/color-mode";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { Header } from "./components/header";
-import { ColorModeContextProvider } from "./contexts/color-mode";
+import NoteAltIcon from "@mui/icons-material/NoteAlt";
+import TopicIcon from "@mui/icons-material/Topic";
 
 function App() {
   return (
     <BrowserRouter>
-      {/* <GitHubBanner /> */}
-      <RefineKbarProvider>
-        <ColorModeContextProvider>
-          <CssBaseline />
-          <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
-          <RefineSnackbarProvider>
-            <Refine
-              dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-              notificationProvider={notificationProvider}
-              routerProvider={routerBindings}
-              resources={[
-                {
-                  name: "blog_posts",
-                  list: "/blog-posts",
-                  create: "/blog-posts/create",
-                  edit: "/blog-posts/edit/:id",
-                  show: "/blog-posts/show/:id",
-                  meta: {
-                    canDelete: true,
-                  },
+      <ColorModeContextProvider>
+        <CssBaseline />
+        <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
+        <RefineSnackbarProvider>
+          <Refine
+            routerProvider={routerBindings}
+            dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+            notificationProvider={notificationProvider}
+            resources={[
+              {
+                name: "blog_posts",
+                list: "/blog-posts",
+                show: "/blog-posts/show/:id",
+                create: "/blog-posts/create",
+                edit: "/blog-posts/edit/:id",
+                meta: {
+                  label: "Blog Posts",
+                  icon: <NoteAltIcon />,
                 },
-                {
-                  name: "categories",
-                  list: "/categories",
-                  create: "/categories/create",
-                  edit: "/categories/edit/:id",
-                  show: "/categories/show/:id",
-                  meta: {
-                    canDelete: true,
-                  },
+              },
+              {
+                name: "topics",
+                list: "/topics",
+                show: "/topics/show/:id",
+                create: "/topics/create",
+                edit: "/topics/edit/:id",
+                meta: {
+                  label: "Topic",
+                  icon: <TopicIcon />,
                 },
-              ]}
-              options={{
-                syncWithLocation: true,
-                warnWhenUnsavedChanges: true,
-              }}
-            >
-              <Routes>
+              },
+            ]}
+            options={{
+              syncWithLocation: true,
+              warnWhenUnsavedChanges: true,
+              reactQuery: {
+                devtoolConfig: false,
+              },
+            }}
+          >
+            <Routes>
+              <Route
+                element={
+                  <ThemedLayout Header={Header} Title={Title}>
+                    <Outlet />
+                  </ThemedLayout>
+                }
+              >
                 <Route
-                  element={
-                    <ThemedLayout Header={Header}>
-                      <Outlet />
-                    </ThemedLayout>
-                  }
-                >
+                  index
+                  element={<NavigateToResource resource="blog_posts" />}
+                />
+                <Route path="blog-posts">
                   <Route
                     index
-                    element={<NavigateToResource resource="blog_posts" />}
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
                   />
-                  <Route path="/blog-posts">
-                    <Route index element={<BlogPostList />} />
-                    <Route path="create" element={<BlogPostCreate />} />
-                    <Route path="edit/:id" element={<BlogPostEdit />} />
-                    <Route path="show/:id" element={<BlogPostShow />} />
-                  </Route>
-                  <Route path="/categories">
-                    <Route index element={<CategoryList />} />
-                    <Route path="create" element={<CategoryCreate />} />
-                    <Route path="edit/:id" element={<CategoryEdit />} />
-                    <Route path="show/:id" element={<CategoryShow />} />
-                  </Route>
+                  <Route
+                    path="show/:id"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                  <Route
+                    path="edit/:id"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                  <Route
+                    path="create"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
                 </Route>
                 <Route
-                  element={
-                    <ThemedLayout Header={Header}>
-                      <Outlet />
-                    </ThemedLayout>
-                  }
-                >
-                  <Route path="*" element={<ErrorComponent />} />
+                  index
+                  element={<NavigateToResource resource="topics" />}
+                />
+                <Route path="topics">
+                  <Route
+                    index
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                  <Route
+                    path="show/:id"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                  <Route
+                    path="edit/:id"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                  <Route
+                    path="create"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
                 </Route>
-              </Routes>
-              <RefineKbar />
-              <UnsavedChangesNotifier />
-            </Refine>
-          </RefineSnackbarProvider>
-        </ColorModeContextProvider>
-      </RefineKbarProvider>
+                <Route path="*" element={<ErrorComponent />} />
+              </Route>
+            </Routes>
+            <UnsavedChangesNotifier />
+          </Refine>
+        </RefineSnackbarProvider>
+      </ColorModeContextProvider>
     </BrowserRouter>
   );
 }
