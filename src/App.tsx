@@ -7,6 +7,7 @@ import {
   notificationProvider,
   RefineSnackbarProvider,
   ThemedLayout,
+  ThemedLayoutV2,
 } from "@refinedev/mui";
 
 import routerBindings, {
@@ -20,6 +21,7 @@ import { ColorModeContextProvider } from "contexts/color-mode";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import TopicIcon from "@mui/icons-material/Topic";
+import { TagList } from "pages/tags";
 
 function App() {
   return (
@@ -30,28 +32,36 @@ function App() {
         <RefineSnackbarProvider>
           <Refine
             routerProvider={routerBindings}
-            dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+            dataProvider={dataProvider("/api")}
+            // dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
             notificationProvider={notificationProvider}
             resources={[
+              // {
+              //   name: "blog_posts",
+              //   list: "/blog-posts",
+              //   show: "/blog-posts/show/:id",
+              //   create: "/blog-posts/create",
+              //   edit: "/blog-posts/edit/:id",
+              // },
               {
-                name: "blog_posts",
-                list: "/blog-posts",
-                show: "/blog-posts/show/:id",
-                create: "/blog-posts/create",
-                edit: "/blog-posts/edit/:id",
+                name: "tags",
+                list: "/tags",
+                show: "/tags/show/:id",
+                create: "/tags/create",
+                edit: "/tags/edit/:id",
                 meta: {
-                  label: "Blog Posts",
+                  label: "Tags",
                   icon: <NoteAltIcon />,
                 },
               },
               {
-                name: "topics",
-                list: "/topics",
-                show: "/topics/show/:id",
-                create: "/topics/create",
-                edit: "/topics/edit/:id",
+                name: "replies",
+                list: "/replies",
+                show: "/replies/show/:id",
+                create: "/replies/create",
+                edit: "/replies/edit/:id",
                 meta: {
-                  label: "Topic",
+                  label: "replies",
                   icon: <TopicIcon />,
                 },
               },
@@ -72,7 +82,7 @@ function App() {
                   </ThemedLayout>
                 }
               >
-                <Route
+                {/* <Route
                   index
                   element={<NavigateToResource resource="blog_posts" />}
                 />
@@ -101,12 +111,14 @@ function App() {
                       <MuiInferencer hideCodeViewerInProduction={true} />
                     }
                   />
-                </Route>
+                </Route> */}
+                <Route index element={<NavigateToResource resource="tags" />} />
+                <Route path="/tags" element={<TagList />} />
                 <Route
                   index
-                  element={<NavigateToResource resource="topics" />}
+                  element={<NavigateToResource resource="replies" />}
                 />
-                <Route path="topics">
+                <Route path="replies">
                   <Route
                     index
                     element={
