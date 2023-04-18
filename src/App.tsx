@@ -6,10 +6,11 @@ import {
   ErrorComponent,
   notificationProvider,
   RefineSnackbarProvider,
-  ThemedLayout,
   ThemedLayoutV2,
 } from "@refinedev/mui";
 
+import NoteAltIcon from "@mui/icons-material/NoteAlt";
+import TopicIcon from "@mui/icons-material/Topic";
 import routerBindings, {
   NavigateToResource,
   UnsavedChangesNotifier,
@@ -18,10 +19,8 @@ import dataProvider from "@refinedev/simple-rest";
 import { Header } from "components";
 import { Title } from "components/title";
 import { ColorModeContextProvider } from "contexts/color-mode";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import NoteAltIcon from "@mui/icons-material/NoteAlt";
-import TopicIcon from "@mui/icons-material/Topic";
 import { TagList } from "pages/tags";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -77,9 +76,9 @@ function App() {
             <Routes>
               <Route
                 element={
-                  <ThemedLayout Header={Header} Title={Title}>
+                  <ThemedLayoutV2 Header={Header} Title={Title}>
                     <Outlet />
-                  </ThemedLayout>
+                  </ThemedLayoutV2>
                 }
               >
                 {/* <Route
@@ -113,7 +112,27 @@ function App() {
                   />
                 </Route> */}
                 <Route index element={<NavigateToResource resource="tags" />} />
-                <Route path="/tags" element={<TagList />} />
+                <Route path="tags">
+                  <Route index element={<TagList />} />
+                  <Route
+                    path="show/:id"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                  <Route
+                    path="edit/:id"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                  <Route
+                    path="create"
+                    element={
+                      <MuiInferencer hideCodeViewerInProduction={true} />
+                    }
+                  />
+                </Route>
                 <Route
                   index
                   element={<NavigateToResource resource="replies" />}

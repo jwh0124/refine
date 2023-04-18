@@ -8,6 +8,15 @@ import { ITag } from "interfaces";
 export const TagList: React.FC = () => {
   const { dataGridProps } = useDataGrid<ITag>();
 
+  const {
+    paginationMode,
+    page,
+    onPageChange,
+    pageSize,
+    onPageSizeChange,
+    ...restDataGridProps
+  } = dataGridProps;
+
   const columns = React.useMemo<GridColumns<ITag>>(
     () => [
       {
@@ -26,6 +35,12 @@ export const TagList: React.FC = () => {
       <DataGrid
         {...dataGridProps}
         columns={columns}
+        {...restDataGridProps}
+        paginationMode={paginationMode}
+        page={page}
+        onPageChange={onPageChange}
+        pageSize={pageSize}
+        onPageSizeChange={onPageSizeChange}
         autoHeight
         rowsPerPageOptions={[10, 25, 30, 50, 100]}
       />
