@@ -62,6 +62,8 @@ function App() {
                 meta: {
                   label: "replies",
                   icon: <TopicIcon />,
+                  parent: "tags",
+                  canDelete: true,
                 },
               },
             ]}
