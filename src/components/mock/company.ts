@@ -1,23 +1,21 @@
 import { GetListResponse } from "@refinedev/core";
 
 export const companyList = {
-  id: 1,
-  name: "대쉬보드 읽기",
+  data: [{ id: 1, name: "대쉬보드 읽기" }],
 };
 
 export interface ICompany {
   id: number;
   name: string;
 }
+export const getList = () => {
+  const companys: GetListResponse<> = {
+    data: [],
+    total: 10,
+  };
+  return Promise.resolve(companyList);
+};
 
-class CompanyApi {
-  // getCompany(): Promise<GetListResponse<ICompany[]>> {
-  //   const companys: GetListResponse<ICompany[]> = {
-  //     data: companyList,
-  //     total: 10,
-  //   };
-  //   return Promise.resolve(companys);
-  // }
-}
+class CompanyApi {}
 
 export const companyApi = new CompanyApi();

@@ -12,16 +12,29 @@ import {
   Pagination,
   UpdateResponse,
 } from "@refinedev/core";
-import { companyApi } from "./company";
+import { ICompany, companyApi, companyList, getList } from "./company";
 
 const mockProvider: DataProvider = {
-  //   getList: async ({ resource, pagination }) => {
-  //     const { data } = await companyApi.getCompany();
-  //     return {
-  //       data: data[0],
-  //       total: 0,
-  //     };
-  //   },
+  getList: async ({ resource, pagination }) => {
+    const result = await getList();
+    return {
+      data: result.data,
+      total: 10,
+    };
+  },
+  // getList: function <TData extends BaseRecord = BaseRecord>(params: {
+  //   resource: string;
+  //   pagination?: Pagination | undefined;
+  //   hasPagination?: boolean | undefined;
+  //   sort?: CrudSorting | undefined;
+  //   sorters?: CrudSorting | undefined;
+  //   filters?: CrudFilters | undefined;
+  //   meta?: MetaQuery | undefined;
+  //   metaData?: MetaQuery | undefined;
+  //   dataProviderName?: string | undefined;
+  // }): Promise<GetListResponse<TData>> {
+  //   throw new Error("Function not implemented.");
+  // },
   getOne: function <TData extends BaseRecord = BaseRecord>(params: {
     resource: string;
     id: BaseKey;
@@ -66,19 +79,6 @@ const mockProvider: DataProvider = {
     throw new Error("Function not implemented.");
   },
   getApiUrl: function (): string {
-    throw new Error("Function not implemented.");
-  },
-  getList: function <TData extends BaseRecord = BaseRecord>(params: {
-    resource: string;
-    pagination?: Pagination | undefined;
-    hasPagination?: boolean | undefined;
-    sort?: CrudSorting | undefined;
-    sorters?: CrudSorting | undefined;
-    filters?: CrudFilters | undefined;
-    meta?: MetaQuery | undefined;
-    metaData?: MetaQuery | undefined;
-    dataProviderName?: string | undefined;
-  }): Promise<GetListResponse<TData>> {
     throw new Error("Function not implemented.");
   },
 };
