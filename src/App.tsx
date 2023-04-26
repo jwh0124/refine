@@ -21,7 +21,7 @@ import { Title } from "components/title";
 import { ColorModeContextProvider } from "contexts/color-mode";
 import { TagList } from "pages/tags";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-
+import { mockProvider } from "components/mock/mockProvider";
 function App() {
   return (
     <BrowserRouter>
@@ -31,7 +31,10 @@ function App() {
         <RefineSnackbarProvider>
           <Refine
             routerProvider={routerBindings}
-            dataProvider={dataProvider("/api")}
+            dataProvider={{
+              default: dataProvider("/api"),
+              mock: mockProvider,
+            }}
             // dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
             notificationProvider={notificationProvider}
             resources={[
@@ -51,6 +54,8 @@ function App() {
                 meta: {
                   label: "Tags",
                   icon: <NoteAltIcon />,
+                  canDelete: true,
+                  dataProviderName: "mock",
                 },
               },
               {
@@ -62,8 +67,8 @@ function App() {
                 meta: {
                   label: "replies",
                   icon: <TopicIcon />,
-                  parent: "tags",
                   canDelete: true,
+                  dataProviderName: "mock",
                 },
               },
             ]}
