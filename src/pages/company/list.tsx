@@ -1,12 +1,12 @@
-import { List, useDataGrid } from "@refinedev/mui";
+import { EditButton, List, ShowButton, useDataGrid } from "@refinedev/mui";
 import React from "react";
 
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
 
-import { ITag } from "interfaces";
+import { ICompany } from "interfaces";
 
-export const TagList: React.FC = () => {
-  const { dataGridProps } = useDataGrid<ITag>();
+export const CompanyList: React.FC = () => {
+  const { dataGridProps } = useDataGrid<ICompany>();
 
   const {
     paginationMode,
@@ -17,7 +17,7 @@ export const TagList: React.FC = () => {
     ...restDataGridProps
   } = dataGridProps;
 
-  const columns = React.useMemo<GridColumns<ITag>>(
+  const columns = React.useMemo<GridColumns<any>>(
     () => [
       {
         field: "id",
@@ -26,6 +26,22 @@ export const TagList: React.FC = () => {
         width: 50,
       },
       { field: "name", headerName: "Name", minWidth: 400, flex: 1 },
+      {
+        field: "actions",
+        headerName: "Actions",
+        sortable: false,
+        renderCell: function render({ row }) {
+          return (
+            <>
+              <EditButton hideText size="small" recordItemId={row.id} />
+              <ShowButton hideText size="small" recordItemId={row.id} />
+            </>
+          );
+        },
+        align: "center",
+        headerAlign: "center",
+        minWidth: 80,
+      },
     ],
     []
   );

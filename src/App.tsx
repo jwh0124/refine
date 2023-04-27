@@ -17,11 +17,11 @@ import routerBindings, {
 } from "@refinedev/react-router-v6";
 import dataProvider from "@refinedev/simple-rest";
 import { Header } from "components";
+import { mockProvider } from "components/mock/mockProvider";
 import { Title } from "components/title";
 import { ColorModeContextProvider } from "contexts/color-mode";
-import { TagList } from "pages/tags";
+import { CompanyList } from "pages/company";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { mockProvider } from "components/mock/mockProvider";
 function App() {
   return (
     <BrowserRouter>
@@ -35,24 +35,16 @@ function App() {
               default: dataProvider("/api"),
               mock: mockProvider,
             }}
-            // dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
             notificationProvider={notificationProvider}
             resources={[
-              // {
-              //   name: "blog_posts",
-              //   list: "/blog-posts",
-              //   show: "/blog-posts/show/:id",
-              //   create: "/blog-posts/create",
-              //   edit: "/blog-posts/edit/:id",
-              // },
               {
-                name: "tags",
-                list: "/tags",
-                show: "/tags/show/:id",
-                create: "/tags/create",
-                edit: "/tags/edit/:id",
+                name: "company",
+                list: "/company",
+                show: "/company/show/:id",
+                create: "/company/create",
+                edit: "/company/edit/:id",
                 meta: {
-                  label: "Tags",
+                  label: "Company",
                   icon: <NoteAltIcon />,
                   canDelete: true,
                   dataProviderName: "mock",
@@ -68,7 +60,7 @@ function App() {
                   label: "replies",
                   icon: <TopicIcon />,
                   canDelete: true,
-                  dataProviderName: "mock",
+                  // dataProviderName: "mock",
                 },
               },
             ]}
@@ -88,39 +80,12 @@ function App() {
                   </ThemedLayoutV2>
                 }
               >
-                {/* <Route
+                <Route
                   index
-                  element={<NavigateToResource resource="blog_posts" />}
+                  element={<NavigateToResource resource="company" />}
                 />
-                <Route path="blog-posts">
-                  <Route
-                    index
-                    element={
-                      <MuiInferencer hideCodeViewerInProduction={true} />
-                    }
-                  />
-                  <Route
-                    path="show/:id"
-                    element={
-                      <MuiInferencer hideCodeViewerInProduction={true} />
-                    }
-                  />
-                  <Route
-                    path="edit/:id"
-                    element={
-                      <MuiInferencer hideCodeViewerInProduction={true} />
-                    }
-                  />
-                  <Route
-                    path="create"
-                    element={
-                      <MuiInferencer hideCodeViewerInProduction={true} />
-                    }
-                  />
-                </Route> */}
-                <Route index element={<NavigateToResource resource="tags" />} />
-                <Route path="tags">
-                  <Route index element={<TagList />} />
+                <Route path="company">
+                  <Route index element={<CompanyList />} />
                   <Route
                     path="show/:id"
                     element={
