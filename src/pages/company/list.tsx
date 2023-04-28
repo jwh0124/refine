@@ -1,4 +1,10 @@
-import { EditButton, List, ShowButton, useDataGrid } from "@refinedev/mui";
+import {
+  DateField,
+  EditButton,
+  List,
+  ShowButton,
+  useDataGrid,
+} from "@refinedev/mui";
 import React from "react";
 
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
@@ -26,6 +32,22 @@ export const CompanyList: React.FC = () => {
         width: 50,
       },
       { field: "name", headerName: "Name", minWidth: 400, flex: 1 },
+      // {
+      //   field: "createdAt",
+      //   headerName: "Created At",
+      //   minWidth: 250,
+      //   renderCell: function render({ value }) {
+      //     return <DateField format="YYYY-MM-DD HH:mm:ssZ" value={value} />;
+      //   },
+      // },
+      // {
+      //   field: "updatedAt",
+      //   headerName: "Update At",
+      //   minWidth: 250,
+      //   renderCell: function render({ value }) {
+      //     return <DateField format="YYYY-MM-DD HH:mm:ssZ" value={value} />;
+      //   },
+      // },
       {
         field: "actions",
         headerName: "Actions",
