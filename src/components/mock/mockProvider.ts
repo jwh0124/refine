@@ -51,7 +51,8 @@ export const mockProvider: DataProvider = {
     };
   },
   deleteOne: async ({ resource, id, variables, meta }) => {
-    dataList.splice(Number(id) - 1, 1);
+    const deleteItem = dataList.findIndex((e) => e.id === Number(id));
+    dataList.splice(deleteItem, 1);
     const data: any = variables;
     return {
       data,
