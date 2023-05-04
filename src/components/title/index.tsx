@@ -39,7 +39,7 @@ export const Title: React.FC<TitleProps> = ({ collapsed }) => {
                 color: modeColor,
               }}
             >
-              Home
+              ISecure
             </Typography>
           </Box>
         )}

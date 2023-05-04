@@ -3,6 +3,7 @@ import { Refine } from "@refinedev/core";
 
 import { MuiInferencer } from "@refinedev/inferencer/mui";
 import {
+  AuthPage,
   ErrorComponent,
   notificationProvider,
   RefineSnackbarProvider,
@@ -11,17 +12,21 @@ import {
 
 import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import TopicIcon from "@mui/icons-material/Topic";
+import { Authenticated } from "@refinedev/core";
 import routerBindings, {
+  CatchAllNavigate,
   NavigateToResource,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
 import dataProvider from "@refinedev/simple-rest";
 import { Header } from "components";
+import { authProvider } from "components/mock/authProvider";
 import { mockProvider } from "components/mock/mockProvider";
 import { Title } from "components/title";
 import { ColorModeContextProvider } from "contexts/color-mode";
 import { CompanyList } from "pages/company";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+
 function App() {
   return (
     <BrowserRouter>
@@ -30,6 +35,7 @@ function App() {
         <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
         <RefineSnackbarProvider>
           <Refine
+            authProvider={authProvider}
             routerProvider={routerBindings}
             dataProvider={{
               default: dataProvider("/api"),
@@ -75,9 +81,11 @@ function App() {
             <Routes>
               <Route
                 element={
-                  <ThemedLayoutV2 Header={Header} Title={Title}>
-                    <Outlet />
-                  </ThemedLayoutV2>
+                  <Authenticated fallback={<CatchAllNavigate to="/login" />}>
+                    <ThemedLayoutV2 Header={Header} Title={Title}>
+                      <Outlet />
+                    </ThemedLayoutV2>
+                  </Authenticated>
                 }
               >
                 <Route
@@ -135,8 +143,23 @@ function App() {
                     }
                   />
                 </Route>
-                <Route path="*" element={<ErrorComponent />} />
               </Route>
+              <Route element={<Authenticated fallback={<Outlet />} />}>
+                <Route path="/login" element={<AuthPage type="login" />} />
+                <Route
+                  path="/register"
+                  element={<AuthPage type="register" />}
+                />
+                <Route
+                  path="/forgot-password"
+                  element={<AuthPage type="forgotPassword" />}
+                />
+                <Route
+                  path="/update-password"
+                  element={<AuthPage type="updatePassword" />}
+                />
+              </Route>
+              <Route path="*" element={<ErrorComponent />} />
             </Routes>
             <UnsavedChangesNotifier />
           </Refine>
